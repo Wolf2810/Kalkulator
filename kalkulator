@@ -1,0 +1,133 @@
+package kalkulator;
+
+   
+    import java.io.FileNotFoundException;
+	import java.io.FileReader;
+	import java.io.IOException;
+	import java.io.StreamTokenizer;
+	import java.util.Scanner;
+
+	public class kalkulator {
+
+	public static void main(String[] args) {
+		int wartosc = 0;
+	    FileReader fr= null;
+	    int a;
+	    char wybor,znak = 0;
+		int b;
+		int c;
+		Scanner wej = new Scanner(System.in);
+		 System.out.println("Program - kalkulator");
+		 System.out.println("Prosze wybrac :");
+		 System.out.println("k - jesli ma czytac z klawiatury");
+		 System.out.println("p - jesli ma czytac z pliku");  
+	     wybor = wej.next().charAt(0);
+		    
+		switch (wybor) {
+		  case 'k':
+		  {
+				while( znak!='$'){
+		    	 System.out.println("Podaj pierwszą liczbę:"); // przy pomocy Scanner
+		         a = wej.nextInt();
+		         System.out.println("Podaj drugą liczbę:");
+		         b = wej.nextInt();
+		         System.out.println("Podaj trzecią liczbę:");
+		         c = wej.nextInt();
+		   
+		         System.out.println("Dodawanie liczb - wciśnij +");
+		         System.out.println("Odejmowanie liczb - wciśnij -");
+		         System.out.println("Mnożenie liczb - wciśnij *");
+		         System.out.println("Dzielenie liczb - wciśnij /");
+		         System.out.println("Operacaja modulo - wciśnij %");
+		         System.out.println("Koniec programu - wciśnij $");
+		   
+		         znak = wej.next().charAt(0);  
+		         switch(znak)     
+		         {
+		             case '+':   
+		             {
+		                 System.out.println(a + b + c);
+		                 break;
+		             }
+		             case '-':    
+		             {
+		                 System.out.println(a - b - c);
+		                 break;
+		             }
+		             case '*':   
+		             {
+		                 System.out.println(a * b * c);
+		                 break;
+		             }
+		             case '/':   
+		             {           
+		                 if(b !=0)
+		                 {
+		                   System.out.println(a / b / c + " oraz reszty: " +
+		                           a % b % c);
+		                 }
+		                 else
+		                 {
+		                     System.out.println("Nie dzielimy przez zero!!!");
+		                 }
+		                 break;
+		             }
+		             case '%':  
+		             {
+		                 if(b !=0 && c != 0)  
+		                 {
+		                     System.out.println(a % b % c);
+		                 }
+		                 else
+		                 {
+		                     System.out.println("Nie dzielimy przez zero!!");
+		                 }
+		             }
+		   
+		         }
+		    	}
+			  break;
+		    }
+
+		  case 'c':
+		    {
+		    	try {
+		            fr = new FileReader("plik.txt");
+		         } catch (FileNotFoundException e) {
+		               System.out.println("BŁĄD PRZY OTWIERANIU PLIKU!");
+		               System.exit(1);
+		         }
+
+		         StreamTokenizer st = new StreamTokenizer(fr);
+		         //ODCZYT KOLEJNYCH "TOKENÓW" Z PLIKU:
+		         try {
+		            while( (wartosc = st.nextToken()) != StreamTokenizer.TT_EOF ){
+		                  if(wartosc == StreamTokenizer.TT_WORD)
+		                        System.out.println("Wczytano słowo: "+ st.sval);
+		                  else if(wartosc == StreamTokenizer.TT_NUMBER)  
+		                        System.out.println("Wczytano liczbę: "+ st.nval);
+		             }
+		          } catch (IOException e) {
+		                System.out.println("BŁĄD ODCZYTU Z PLIKU!");
+		                System.exit(2);
+		          }
+
+		          //ZAMYKANIE PLIKU:
+		          try {
+		             fr.close();
+		          } catch (IOException e) {
+		               System.out.println("BŁĄD PRZY ZAMYKANIU PLIKU!");
+		               System.exit(3);
+		          }
+		    	
+			  break;
+		    }
+
+		  default:
+		    {
+		    	 System.out.println("Nie wybrales odpowiedniego numeru! ");
+		    	 break;
+		    }
+		}
+	}
+	}
